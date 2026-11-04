@@ -1,0 +1,17 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="top" android:baselineAligned="false" android:background="@drawable/card" android:padding="14dp" android:layout_marginBottom="11dp" android:clickable="true" android:focusable="true" android:foreground="?android:attr/selectableItemBackground" tools:ignore="NestedWeights">
+    <ImageView android:src="@drawable/ic_step" android:layout_width="30dp" android:layout_height="30dp" android:importantForAccessibility="no" android:background="@drawable/icon_bg" android:padding="6dp" android:layout_marginEnd="10dp" android:layout_gravity="top" />
+    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:orientation="vertical" android:layout_weight="1">
+        <TextView style="@style/Title" android:id="@+id/itemTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/itemTitle" android:textSize="14sp" android:textColor="@color/text" />
+        <TextView style="@style/Text" android:id="@+id/itemDate" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/itemDate" android:textSize="11sp" android:textColor="@color/muted" android:layout_marginTop="6dp" />
+        <TextView style="@style/Text" android:id="@+id/itemStats" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/itemStats" android:textSize="12sp" android:textColor="#BED0AF" android:layout_marginTop="8dp" />
+        <TextView style="@style/Text" android:id="@+id/itemRates" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/itemRates" android:textSize="11sp" android:textColor="@color/muted" android:layout_marginTop="5dp" android:lineSpacingExtra="2dp" />
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginTop="8dp" android:id="@+id/itemBadges">
+            <TextView style="@style/Badge" android:id="@+id/badgeStep" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/badgeStep" android:textSize="14sp" android:textColor="@color/text" />
+            <TextView style="@style/Badge" android:id="@+id/badgeShake" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/badgeShake" android:textSize="14sp" android:textColor="@color/lilac" android:background="@drawable/badge_shake" android:layout_marginTop="5dp" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginStart="8dp" android:layout_gravity="top">
+        <TextView style="@style/Title" android:id="@+id/itemSteps" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/itemSteps" android:textSize="22sp" android:textColor="@color/text" android:layout_gravity="end" />
+        <TextView style="@style/Text" android:id="@+id/itemUnit" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/itemUnit" android:textSize="10sp" android:textColor="@color/muted" android:layout_marginTop="3dp" />
+    </LinearLayout>
+</LinearLayout>

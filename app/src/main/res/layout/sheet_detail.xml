@@ -1,0 +1,25 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/sheet" android:padding="23dp">
+    <View android:layout_width="34dp" android:layout_height="4dp" android:layout_gravity="center" android:background="#5D7050" android:layout_marginBottom="22dp" />
+    <TextView style="@style/Title" android:id="@+id/detailTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/detailTitle" android:textSize="21sp" android:textColor="@color/text" />
+    <TextView style="@style/Text" android:id="@+id/tvDetailDate" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/tvDetailDate" android:textSize="12sp" android:textColor="@color/muted" android:layout_marginTop="12dp" />
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginTop="12dp" android:id="@+id/detailBadges">
+        <TextView style="@style/Badge" android:id="@+id/detailStepBadge" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/detailStepBadge" android:textSize="14sp" android:textColor="@color/text" />
+        <TextView style="@style/Badge" android:id="@+id/detailShakeBadge" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/detailShakeBadge" android:textSize="14sp" android:textColor="@color/lilac" android:background="@drawable/badge_shake" android:layout_marginTop="6dp" />
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:baselineAligned="false" android:layout_marginTop="12dp">
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/card" android:padding="17dp" android:layout_weight="1">
+            <TextView style="@style/Text" android:id="@+id/detailStepsLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/detailStepsLabel" android:textSize="12sp" android:textColor="@color/muted" />
+            <TextView style="@style/Text" android:id="@+id/tvDetailSteps" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/tvDetailSteps" android:textSize="32sp" android:textColor="@color/lime" android:layout_marginTop="8dp" />
+        </LinearLayout>
+        <Space android:layout_width="10dp" android:layout_height="1dp" />
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/card" android:padding="17dp" android:layout_weight="1">
+            <TextView style="@style/Text" android:id="@+id/detailShakesLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/detailShakesLabel" android:textSize="12sp" android:textColor="@color/muted" />
+            <TextView style="@style/Text" android:id="@+id/tvDetailShakes" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/tvDetailShakes" android:textSize="32sp" android:textColor="@color/lilac" android:layout_marginTop="8dp" />
+        </LinearLayout>
+    </LinearLayout>
+    <TextView style="@style/Text" android:id="@+id/tvDetailDuration" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/tvDetailDuration" android:textSize="13sp" android:textColor="@color/text" android:layout_marginTop="17dp" />
+    <TextView style="@style/Text" android:id="@+id/tvDetailRate" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/tvDetailRate" android:textSize="13sp" android:textColor="@color/text" android:layout_marginTop="12dp" />
+    <TextView style="@style/Text" android:id="@+id/tvDetailShakeRate" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/tvDetailShakeRate" android:textSize="13sp" android:textColor="@color/text" android:layout_marginTop="12dp" />
+    <Button style="@style/Action" android:id="@+id/btnDetailDone" android:text="@string/btnDetailDone" android:layout_marginTop="22dp" />
+    <Button style="@style/Secondary" android:id="@+id/btnDetailDelete" android:text="@string/btnDetailDelete" android:background="@drawable/button_danger" android:textColor="#EFBDA2" android:layout_marginTop="10dp" />
+</LinearLayout>

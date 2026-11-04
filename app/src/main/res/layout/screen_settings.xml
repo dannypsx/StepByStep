@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone" tools:visibility="visible" android:paddingHorizontal="20dp" android:paddingBottom="24dp" android:id="@+id/pageSettings">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginTop="11dp" android:layout_marginBottom="22dp">
+        <TextView style="@style/Text" android:id="@+id/settingsKicker" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/settingsKicker" android:textSize="10sp" android:textColor="#A6BB92" android:letterSpacing="0.12" />
+        <TextView style="@style/Title" android:id="@+id/settingsTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/settingsTitle" android:textSize="25sp" android:textColor="@color/text" android:layout_marginTop="8dp" />
+        <TextView style="@style/Text" android:id="@+id/settingsSub" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/settingsSub" android:textSize="12sp" android:textColor="@color/muted" android:layout_marginTop="7dp" android:lineSpacingExtra="3dp" />
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/card" android:padding="17dp">
+        <TextView style="@style/Title" android:id="@+id/goalTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/goalTitle" android:textSize="16sp" android:textColor="@color/text" />
+        <TextView style="@style/Text" android:id="@+id/goalHint" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/goalHint" android:textSize="12sp" android:textColor="@color/muted" android:layout_marginTop="8dp" />
+        <Button style="@style/Secondary" android:id="@+id/btnSettingsGoal" android:text="@string/btnSettingsGoal" android:layout_marginTop="14dp" />
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/card" android:padding="17dp" android:layout_marginTop="12dp">
+        <TextView style="@style/Title" android:id="@+id/previewTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/previewTitle" android:textSize="16sp" android:textColor="@color/text" />
+        <TextView style="@style/Text" android:id="@+id/previewHint" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/previewHint" android:textSize="12sp" android:textColor="@color/muted" android:layout_marginTop="8dp" />
+        <Button style="@style/Secondary" android:id="@+id/btnSettingsPreview" android:text="@string/btnSettingsPreview" android:layout_marginTop="14dp" />
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/card" android:padding="17dp" android:layout_marginTop="12dp">
+        <TextView style="@style/Title" android:id="@+id/timingTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/timingTitle" android:textSize="16sp" android:textColor="@color/text" />
+        <TextView style="@style/Text" android:id="@+id/timingHint" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/timingHint" android:textSize="12sp" android:textColor="@color/muted" android:layout_marginTop="8dp" />
+        <Switch android:id="@+id/switchAutoStart" android:layout_width="match_parent" android:layout_height="56dp" android:text="@string/auto_start" android:textColor="@color/text" android:textSize="13sp" android:checked="true" />
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/card" android:padding="17dp" android:layout_marginTop="12dp">
+        <TextView style="@style/Title" android:id="@+id/sensorTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/sensorTitle" android:textSize="16sp" android:textColor="@color/text" />
+        <TextView style="@style/Text" android:id="@+id/sensorHint" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/sensorHint" android:textSize="12sp" android:textColor="@color/muted" android:layout_marginTop="8dp" />
+        <Button style="@style/Secondary" android:id="@+id/btnSensorPreview" android:text="@string/btnSensorPreview" android:layout_marginTop="14dp" />
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/card" android:padding="17dp" android:layout_marginTop="12dp">
+        <TextView style="@style/Title" android:id="@+id/aboutTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/aboutTitle" android:textSize="16sp" android:textColor="@color/text" />
+        <TextView style="@style/Text" android:id="@+id/aboutText" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/aboutText" android:textSize="12sp" android:textColor="@color/muted" android:layout_marginTop="9dp" android:lineSpacingExtra="5dp" />
+    </LinearLayout>
+</LinearLayout>

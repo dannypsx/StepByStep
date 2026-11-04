@@ -1,0 +1,15 @@
+.gradle/
+.idea/
+local.properties
+**/build/
+*.iml
+
+# Local artifacts and signing material
+preview-apk/
+*.apk
+*.aab
+*.jks
+*.keystore
+keystore.properties
+*.log
+.DS_Store

@@ -1,0 +1,11 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/sheet" android:padding="23dp">
+    <View android:layout_width="34dp" android:layout_height="4dp" android:layout_gravity="center" android:background="#5D7050" android:layout_marginBottom="22dp" />
+    <TextView style="@style/Title" android:id="@+id/previewSheetTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/previewSheetTitle" android:textSize="21sp" android:textColor="@color/text" />
+    <TextView style="@style/Text" android:id="@+id/previewSheetHint" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/previewSheetHint" android:textSize="13sp" android:textColor="@color/muted" android:lineSpacingExtra="4dp" android:layout_marginTop="12dp" />
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:baselineAligned="false" android:layout_marginTop="20dp">
+        <Button style="@style/Secondary" android:id="@+id/btnAddStep" android:text="@string/btnAddStep" android:layout_width="0dp" android:layout_weight="1" />
+        <Button style="@style/Secondary" android:id="@+id/btnAddShake" android:text="@string/btnAddShake" android:textColor="@color/lilac" android:layout_marginStart="10dp" android:layout_width="0dp" android:layout_weight="1" />
+    </LinearLayout>
+    <Button style="@style/Secondary" android:id="@+id/btnAddTen" android:text="@string/btnAddTen" android:layout_marginTop="10dp" />
+    <Button style="@style/Action" android:id="@+id/btnPreviewDone" android:text="@string/btnPreviewDone" android:layout_marginTop="17dp" />
+</LinearLayout>

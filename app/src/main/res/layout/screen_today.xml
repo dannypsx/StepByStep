@@ -1,0 +1,81 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="20dp" android:paddingBottom="20dp" tools:visibility="visible" android:id="@+id/pageToday">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:baselineAligned="false" android:layout_marginTop="6dp" android:layout_marginBottom="17dp">
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:orientation="vertical" android:layout_weight="1">
+            <TextView style="@style/Text" android:id="@+id/welcome" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/welcome" android:textSize="12sp" android:textColor="@color/muted" />
+            <TextView style="@style/Title" android:id="@+id/homeTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/homeTitle" android:textSize="24sp" android:textColor="@color/text" android:layout_marginTop="3dp" />
+        </LinearLayout>
+        <TextView style="@style/Text" android:id="@+id/tvDate" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/tvDate" android:textSize="11sp" android:textColor="@color/muted" />
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/lime" android:padding="18dp">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:baselineAligned="false">
+            <TextView style="@style/Title" android:id="@+id/stepsTitle" android:layout_width="0dp" android:layout_height="wrap_content" android:text="@string/stepsTitle" android:textSize="13sp" android:textColor="@color/lime_ink" android:layout_weight="1" />
+            <Button style="@style/Secondary" android:id="@+id/btnGoal" android:text="@string/btnGoal" android:layout_width="wrap_content" android:layout_height="44dp" android:textSize="11sp" android:background="@android:color/transparent" android:textColor="@color/lime_ink" android:paddingHorizontal="8dp" />
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:baselineAligned="false" android:layout_marginTop="7dp" android:layout_marginBottom="12dp">
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:orientation="vertical" android:layout_weight="1">
+                <TextView style="@style/Text" android:id="@+id/tvCurrentSteps" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/tvCurrentSteps" android:textSize="74sp" android:textColor="@color/lime_ink" android:fontFamily="sans-serif-medium" android:letterSpacing="-0.07" android:lineSpacingExtra="0dp" />
+                <TextView style="@style/Text" android:id="@+id/stepCaption" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/stepCaption" android:textSize="12sp" android:textColor="#4D6335" />
+            </LinearLayout>
+            <FrameLayout android:layout_width="102dp" android:layout_height="102dp" android:background="@drawable/orbit">
+                <ImageView android:src="@drawable/ic_shoes" android:layout_width="62dp" android:layout_height="62dp" android:importantForAccessibility="no" android:layout_gravity="center" />
+            </FrameLayout>
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:baselineAligned="false">
+                <TextView style="@style/Text" android:id="@+id/tvGoalRemaining" android:layout_width="0dp" android:layout_height="wrap_content" android:text="@string/tvGoalRemaining" android:textSize="11sp" android:textColor="#45602D" android:layout_weight="1" />
+                <TextView style="@style/Text" android:id="@+id/tvGoalPercent" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/tvGoalPercent" android:textSize="11sp" android:textColor="@color/lime_ink" />
+            </LinearLayout>
+            <ProgressBar style="?android:attr/progressBarStyleHorizontal" android:id="@+id/goalProgress" android:layout_width="match_parent" android:layout_height="5dp" android:layout_marginTop="9dp" android:progressDrawable="@drawable/goal_progress" android:progress="9" android:max="100" android:contentDescription="@string/goal_progress_label" />
+            <TextView style="@style/Text" android:id="@+id/heroEncourage" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/heroEncourage" android:textSize="11sp" android:textColor="#52663B" android:layout_marginTop="10dp" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:baselineAligned="false" android:layout_marginTop="12dp">
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/card" android:padding="14dp" android:layout_weight="1">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:baselineAligned="false">
+                <ImageView android:src="@drawable/ic_trend" android:layout_width="16dp" android:layout_height="16dp" android:importantForAccessibility="no" android:tint="@color/lime" />
+                <TextView style="@style/Text" android:id="@+id/paceLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/paceLabel" android:textSize="12sp" android:textColor="@color/muted" android:layout_marginStart="6dp" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:baselineAligned="false" android:layout_marginTop="6dp">
+                <TextView style="@style/Title" android:id="@+id/tvStepsPerMin" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/tvStepsPerMin" android:textSize="27sp" android:textColor="@color/text" />
+                <TextView style="@style/Text" android:id="@+id/paceLabelUnit" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/paceLabelUnit" android:textSize="11sp" android:textColor="@color/muted" android:layout_marginStart="5dp" />
+            </LinearLayout>
+        </LinearLayout>
+        <Space android:layout_width="10dp" android:layout_height="1dp" />
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/card" android:padding="14dp" android:layout_weight="1">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:baselineAligned="false">
+                <ImageView android:src="@drawable/ic_shake" android:layout_width="16dp" android:layout_height="16dp" android:importantForAccessibility="no" android:tint="@color/lilac" />
+                <TextView style="@style/Text" android:id="@+id/shakesLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/shakesLabel" android:textSize="12sp" android:textColor="@color/muted" android:layout_marginStart="6dp" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:baselineAligned="false" android:layout_marginTop="6dp">
+                <TextView style="@style/Title" android:id="@+id/tvCurrentShakes" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/tvCurrentShakes" android:textSize="27sp" android:textColor="@color/text" />
+                <TextView style="@style/Text" android:id="@+id/shakesLabelUnit" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/shakesLabelUnit" android:textSize="11sp" android:textColor="@color/muted" android:layout_marginStart="5dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:baselineAligned="false" android:background="@drawable/session" android:padding="15dp" android:layout_marginTop="12dp" android:id="@+id/sessionCard">
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:orientation="vertical" android:layout_weight="1">
+            <TextView style="@style/Text" android:id="@+id/tvSessionState" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/tvSessionState" android:textSize="11sp" android:textColor="@color/lime" />
+            <TextView style="@style/Title" android:id="@+id/tvSessionDuration" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/tvSessionDuration" android:textSize="27sp" android:textColor="@color/text" android:layout_marginTop="3dp" />
+        </LinearLayout>
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical">
+            <TextView style="@style/Text" android:id="@+id/shakeRateLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/shakeRateLabel" android:textSize="11sp" android:textColor="@color/muted" />
+            <TextView style="@style/Text" android:id="@+id/tvShakesPerMin" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/tvShakesPerMin" android:textSize="13sp" android:textColor="#C4D5B7" android:layout_marginTop="4dp" android:layout_gravity="end" />
+        </LinearLayout>
+        <ImageView android:src="@drawable/ic_motion" android:layout_width="25dp" android:layout_height="25dp" android:importantForAccessibility="no" android:layout_marginStart="13dp" />
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:baselineAligned="false" android:background="@drawable/cumulative" android:padding="14dp" android:layout_marginTop="12dp" android:id="@+id/btnCumulative" android:clickable="true" android:focusable="true">
+        <ImageView android:src="@drawable/ic_history" android:layout_width="22dp" android:layout_height="22dp" android:importantForAccessibility="no" />
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginStart="10dp" android:layout_weight="1">
+            <TextView style="@style/Text" android:id="@+id/totalLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/totalLabel" android:textSize="11sp" android:textColor="@color/muted" />
+            <TextView style="@style/Text" android:id="@+id/tvCumulativeSummary" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/tvCumulativeSummary" android:textSize="13sp" android:textColor="#DAEAC9" android:layout_marginTop="4dp" />
+        </LinearLayout>
+        <ImageView android:src="@drawable/ic_arrow" android:layout_width="14dp" android:layout_height="14dp" android:importantForAccessibility="no" />
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:baselineAligned="false" android:layout_marginTop="9dp">
+        <TextView style="@style/Title" android:id="@+id/recentTitle" android:layout_width="0dp" android:layout_height="wrap_content" android:text="@string/recentTitle" android:textSize="15sp" android:textColor="@color/text" android:layout_weight="1" />
+        <Button style="@style/Secondary" android:id="@+id/btnAllHistory" android:text="@string/btnAllHistory" android:layout_width="wrap_content" android:layout_height="48dp" android:background="@android:color/transparent" android:textColor="@color/lime" android:textSize="12sp" />
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView android:id="@+id/rvRecentHistory" android:layout_width="match_parent" android:layout_height="wrap_content" android:nestedScrollingEnabled="false" android:overScrollMode="never" />
+    <Button style="@style/Secondary" android:id="@+id/btnPreview" android:text="@string/btnPreview" android:layout_marginTop="14dp" />
+    <TextView style="@style/Text" android:id="@+id/demoHomeNote" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/demoHomeNote" android:textSize="11sp" android:textColor="@color/muted" android:layout_marginTop="9dp" android:layout_gravity="center" />
+</LinearLayout>

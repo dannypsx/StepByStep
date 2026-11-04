@@ -1,0 +1,33 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:background="@color/bg" android:id="@+id/root">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:baselineAligned="false" android:paddingHorizontal="21dp" android:paddingTop="8dp" android:paddingBottom="12dp">
+        <ImageView android:src="@drawable/ic_step" android:layout_width="27dp" android:layout_height="27dp" android:importantForAccessibility="no" android:tint="@color/lime_ink" android:background="@drawable/mark" android:padding="4dp" android:rotation="-8" />
+        <TextView style="@style/Title" android:id="@+id/brand" android:layout_width="0dp" android:layout_height="wrap_content" android:text="@string/brand" android:textSize="21sp" android:textColor="@color/text" android:layout_marginStart="9dp" android:layout_weight="1" />
+        <ImageButton android:id="@+id/btnSettings" android:layout_width="48dp" android:layout_height="48dp" android:padding="12dp" android:src="@drawable/ic_user" android:background="@drawable/avatar" android:contentDescription="@string/open_settings" />
+    </LinearLayout>
+    <ScrollView android:id="@+id/mainScroll" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:fillViewport="true" android:clipToPadding="false" android:overScrollMode="never">
+        <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent">
+            <include layout="@layout/screen_today" />
+            <include layout="@layout/screen_history" />
+            <include layout="@layout/screen_insights" />
+            <include layout="@layout/screen_settings" />
+            <include layout="@layout/screen_summary" />
+        </FrameLayout>
+    </ScrollView>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:baselineAligned="false" android:background="@drawable/soft_button" android:paddingHorizontal="15dp" android:id="@+id/toastBar" android:visibility="gone">
+        <TextView style="@style/Text" android:id="@+id/tvToast" android:layout_width="0dp" android:layout_height="wrap_content" android:text="@string/tvToast" android:textSize="12sp" android:textColor="@color/lime_ink" android:layout_weight="1" />
+        <Button style="@style/Action" android:id="@+id/btnUndo" android:text="@string/btnUndo" android:layout_width="wrap_content" android:layout_height="48dp" />
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingHorizontal="20dp" android:paddingTop="9dp" android:id="@+id/actionDock">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:baselineAligned="false">
+            <Button style="@style/Action" android:id="@+id/btnPrimary" android:text="@string/btnPrimary" android:layout_width="0dp" android:layout_weight="1" />
+            <Button style="@style/Secondary" android:id="@+id/btnEnd" android:text="@string/btnEnd" android:layout_marginStart="10dp" android:visibility="gone" android:layout_width="0dp" android:layout_weight="1" />
+        </LinearLayout>
+        <TextView style="@style/Text" android:id="@+id/tvActionHint" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/tvActionHint" android:textSize="10sp" android:textColor="@color/muted" android:gravity="center" android:layout_marginTop="7dp" android:layout_marginBottom="6dp" />
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:baselineAligned="false" android:paddingHorizontal="15dp" android:paddingTop="2dp" android:paddingBottom="7dp">
+        <Button style="@style/Nav" android:id="@+id/navToday" android:text="@string/navToday" android:drawableTop="@drawable/ic_home" />
+        <Button style="@style/Nav" android:id="@+id/navHistory" android:text="@string/navHistory" android:drawableTop="@drawable/ic_history" />
+        <Button style="@style/Nav" android:id="@+id/navInsights" android:text="@string/navInsights" android:drawableTop="@drawable/ic_chart" />
+        <Button style="@style/Nav" android:id="@+id/navSettings" android:text="@string/navSettings" android:drawableTop="@drawable/ic_settings" />
+    </LinearLayout>
+</LinearLayout>

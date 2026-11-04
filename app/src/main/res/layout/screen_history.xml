@@ -1,0 +1,18 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone" tools:visibility="visible" android:paddingHorizontal="20dp" android:paddingBottom="24dp" android:id="@+id/pageHistory">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginTop="11dp" android:layout_marginBottom="22dp">
+        <TextView style="@style/Text" android:id="@+id/historyKicker" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/historyKicker" android:textSize="10sp" android:textColor="#A6BB92" android:letterSpacing="0.12" />
+        <TextView style="@style/Title" android:id="@+id/historyTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/historyTitle" android:textSize="25sp" android:textColor="@color/text" android:layout_marginTop="8dp" />
+        <TextView style="@style/Text" android:id="@+id/historySub" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/historySub" android:textSize="12sp" android:textColor="@color/muted" android:layout_marginTop="7dp" android:lineSpacingExtra="3dp" />
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/card" android:padding="17dp">
+        <TextView style="@style/Text" android:id="@+id/historyTotalsLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/historyTotalsLabel" android:textSize="12sp" android:textColor="@color/muted" />
+        <TextView style="@style/Text" android:id="@+id/tvHistoryTotals" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/tvHistoryTotals" android:textSize="18sp" android:textColor="@color/lime" android:layout_marginTop="9dp" />
+        <TextView style="@style/Text" android:id="@+id/historyExclude" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/historyExclude" android:textSize="11sp" android:textColor="@color/muted" android:layout_marginTop="10dp" />
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:baselineAligned="false" android:layout_marginVertical="18dp">
+        <TextView style="@style/Text" android:id="@+id/savedHistoryLabel" android:layout_width="0dp" android:layout_height="wrap_content" android:text="@string/savedHistoryLabel" android:textSize="12sp" android:textColor="@color/muted" android:layout_weight="1" />
+        <TextView style="@style/Text" android:id="@+id/tvHistoryCount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/tvHistoryCount" android:textSize="12sp" android:textColor="@color/muted" />
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView android:id="@+id/rvActivityHistory" android:layout_width="match_parent" android:layout_height="wrap_content" android:nestedScrollingEnabled="false" android:overScrollMode="never" />
+    <TextView style="@style/Text" android:id="@+id/tvEmptyHistory" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/tvEmptyHistory" android:textSize="14sp" android:textColor="@color/muted" android:gravity="center" android:paddingVertical="40dp" android:visibility="gone" />
+</LinearLayout>

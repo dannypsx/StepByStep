@@ -1,0 +1,15 @@
+<resources>
+    <color name="bg">#111713</color>
+    <color name="surface">#1E2720</color>
+    <color name="line">#303C30</color>
+    <color name="text">#F0F4E9</color>
+    <color name="muted">#A3B297</color>
+    <color name="lime">#DCF88B</color>
+    <color name="lime_ink">#293D1C</color>
+    <color name="lilac">#D3C2F8</color>
+    <color name="soft">#E7EFDD</color>
+    <color name="gold">#EBCB8D</color>
+    <color name="gold_bg">#42391E</color>
+    <color name="coral">#EDC49C</color>
+    <color name="danger_bg">#382A22</color>
+</resources>

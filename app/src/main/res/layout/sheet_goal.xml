@@ -1,0 +1,11 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/sheet" android:padding="23dp">
+    <View android:layout_width="34dp" android:layout_height="4dp" android:layout_gravity="center" android:background="#5D7050" android:layout_marginBottom="22dp" />
+    <TextView style="@style/Title" android:id="@+id/goalSheetTitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/goalSheetTitle" android:textSize="21sp" android:textColor="@color/text" />
+    <TextView style="@style/Text" android:id="@+id/goalSheetHint" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/goalSheetHint" android:textSize="13sp" android:textColor="@color/muted" android:layout_marginTop="11dp" />
+    <EditText android:id="@+id/etGoal" android:layout_width="match_parent" android:layout_height="64dp" android:layout_marginTop="19dp" android:inputType="number" android:maxLength="6" android:singleLine="true" android:background="@drawable/input" android:textColor="@color/lime" android:textSize="28sp" android:paddingHorizontal="14dp" android:importantForAutofill="no" android:contentDescription="@string/goal_input" />
+    <TextView style="@style/Text" android:id="@+id/goalLimit" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/goalLimit" android:textSize="11sp" android:textColor="@color/muted" android:layout_marginTop="8dp" />
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:baselineAligned="false" android:layout_marginTop="20dp">
+        <Button style="@style/Secondary" android:id="@+id/btnGoalCancel" android:text="@string/btnGoalCancel" android:layout_width="0dp" android:layout_weight="1" />
+        <Button style="@style/Action" android:id="@+id/btnGoalSave" android:text="@string/btnGoalSave" android:layout_marginStart="10dp" android:layout_width="0dp" android:layout_weight="1" />
+    </LinearLayout>
+</LinearLayout>
