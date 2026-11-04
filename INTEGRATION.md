@@ -1,90 +1,81 @@
-# ส่งต่องาน UI ให้ผู้พัฒนาระบบ
+# โครงสร้างและแนวทางพัฒนา
 
-## ขอบเขตของชุดนี้
+StepByStep แยกชั้นแสดงผลออกจากข้อมูลและการกระทำของผู้ใช้ เพื่อรองรับการเชื่อมเซนเซอร์และฐานข้อมูลในระยะถัดไป
 
-นี่คือชั้น UI จริงใน Android ไม่ใช่ HTML wrapper ทุกหน้าจอใช้ Android Views และประวัติใช้ RecyclerView 1.4.0 จริง ข้อมูลที่แสดงมาจาก `UiPreviewController` ซึ่งตั้งใจให้เปลี่ยนเป็นตัวควบคุมของเพื่อน
+## องค์ประกอบหลัก
 
-## ลำดับเชื่อมต่อที่แนะนำ
-
-1. สร้าง controller/presenter ที่ implements `ActivityUiActions`
-2. ใน `MainActivity.onCreate()` เปลี่ยนการกำหนด `actions = preview` และการสร้าง preview ให้ผูกกับ controller จริง
-3. เมื่อข้อมูลเปลี่ยน ส่ง `ActivityUiState` ให้ `MainActivity.renderState(state)` บน main thread
-4. เปลี่ยนข้อมูล `history` เป็นผลจาก SQLite และเพิ่ม `historyVersion` เมื่อ insert/delete/restore สำเร็จ เพื่อให้รายการ/กราฟ/ยอดสะสมวาดใหม่
-5. เชื่อม listener เซนเซอร์ใน controller จริง แล้วอัปเดต steps/shakes/seconds โดยไม่ให้ View ไปอ่านเซนเซอร์เอง
-6. แทน lifecycle ที่เรียก `preview.attach()/detach()` และ saved state ของ preview ด้วยนโยบาย lifecycle ของแอปจริง
-7. ลบหรือซ่อนปุ่ม `btnPreview`, `btnSettingsPreview` และ bottom sheet จำลอง เมื่อส่งงานระบบจริง
-
-`UiPreviewController` ใช้ Handler เฉพาะนาฬิกาตัวอย่าง ไม่มี SensorManager, SQLite, HTTP หรือการขอ permission จริง อย่าเชื่อมงานฐานข้อมูลลงใน Adapter หรือ onDraw ของกราฟ ให้ทำ I/O นอก main thread แล้วกลับมาอัปเดต UI บน main thread
-
-## Mapping การกดปุ่ม
-
-| ความตั้งใจผู้ใช้ | เมธอดใน ActivityUiActions |
+| ไฟล์ | หน้าที่ |
 |---|---|
-| เริ่มกิจกรรม | start() |
-| พัก | pause() |
-| ทำต่อ | resume() |
-| จบและตรวจสรุป | finish() |
-| บันทึกหลังตรวจสรุป | save() |
-| กลับหน้าวันนี้หลังบันทึก | newSession() |
-| ยืนยันไม่บันทึกเซสชัน | discard() |
-| ยืนยันลบรายการที่บันทึก | delete(recordId) |
-| เลิกทำหลังลบ | undoDelete() |
-| ตั้งเป้าหมาย | setGoal(goal) |
-| ตั้งการเริ่มเมื่อเปิดแอป | setAutoStart(enabled) |
+| `MainActivity.java` | แสดงหน้าจอ นำทาง เปิด bottom sheets และรับ `ActivityUiState` |
+| `ActivityUiActions.java` | กำหนดการกระทำที่เกิดจากปุ่มใน UI |
+| `model/ActivityUiState.java` | สถานะกิจกรรมและข้อมูลที่นำมาแสดงผล |
+| `model/ActivityRecord.java` | ข้อมูลกิจกรรมหนึ่งรายการและ ID ถาวร |
+| `presentation/ActivityHistoryAdapter.java` | แสดงประวัติด้วย RecyclerView และ ViewHolder |
+| `presentation/UiFormat.java` | จัดรูปแบบเวลา อัตราต่อนาที และป้ายสถิติ |
+| `views/ActivityChartView.java` | วาดกราฟกิจกรรมแบบ Native |
+| `demo/UiPreviewController.java` | จำลองข้อมูลและการเปลี่ยนสถานะสำหรับ UI prototype |
 
-## สถานะหน้าจอ
+## การเชื่อมแหล่งข้อมูลจริง
 
-| phase | ปุ่มหลัก | ปุ่มรอง |
+1. สร้าง controller ที่ implements `ActivityUiActions`
+2. เปลี่ยนการผูก `actions` และ `UiPreviewController` ใน `MainActivity.onCreate()` ให้ใช้ controller ดังกล่าว
+3. ส่งข้อมูลให้ `MainActivity.renderState(state)` บน main thread เมื่อสถานะเปลี่ยน
+4. โหลด `history` จาก SQLite และเพิ่ม `historyVersion` เมื่อเพิ่ม ลบ หรือคืนรายการสำเร็จ
+5. อัปเดต steps, shakes และ seconds จากชั้นอ่านเซนเซอร์และระบบจับเวลา
+6. เชื่อม lifecycle และสิทธิ์ Android ตามพฤติกรรมการติดตามกิจกรรมที่กำหนด
+7. ปรับปุ่มเครื่องมือจำลองให้แสดงเฉพาะโหมดพัฒนาเมื่อระบบจริงพร้อมใช้งาน
+
+ควรอ่าน/เขียนฐานข้อมูลนอก main thread และส่งผลกลับมาแสดงบน main thread โดยไม่ให้ Adapter หรือ `onDraw()` เป็นผู้ทำงาน I/O
+
+## การกระทำและสถานะ
+
+| สถานะ | ปุ่มหลัก | การกระทำอื่น |
 |---|---|---|
-| IDLE | เริ่มกิจกรรม | — |
-| RECORDING | พักกิจกรรม | — |
+| IDLE | เริ่มกิจกรรม | ตั้งเป้าหมาย |
+| RECORDING | พักกิจกรรม | ดูสถิติระหว่างทำกิจกรรม |
 | PAUSED | ทำต่อ | จบกิจกรรม |
-| REVIEW | บันทึกกิจกรรม | กลับไปทำกิจกรรมต่อ / ไม่บันทึก |
+| REVIEW | บันทึกกิจกรรม | กลับไปทำต่อ / ไม่บันทึก |
 | SAVED | กลับหน้าวันนี้ | ดูประวัติกิจกรรม |
 
-ขณะสลับไปเมนูอื่นระหว่างกิจกรรม จะมีปุ่ม “กลับไปกิจกรรม” หรือ “กลับไปสรุปกิจกรรม” ให้กลับมาได้ง่าย ห้ามเพิ่มรายการซ้ำเมื่อผู้ใช้แตะบันทึกซ้ำ: controller ตัวอย่างรับ save เฉพาะ REVIEW
+อินเทอร์เฟซรองรับ `start()`, `pause()`, `resume()`, `finish()`, `save()`, `newSession()`, `discard()`, `delete(recordId)`, `undoDelete()`, `setGoal(goal)` และ `setAutoStart(enabled)`
 
-## Mapping ข้อมูลและ View
+การบันทึกเกิดได้เฉพาะสถานะ REVIEW เพื่อป้องกันการเพิ่มรายการซ้ำ ขณะสลับไปเมนูอื่นระหว่างกิจกรรม จะมีปุ่มกลับไปกิจกรรมหรือกลับไปสรุปกิจกรรม
+
+## ข้อมูลกับ View ID
 
 | ข้อมูล | View ID |
 |---|---|
-| จำนวนก้าว | tvCurrentSteps |
-| จำนวนการเขย่า | tvCurrentShakes |
-| เวลา | tvSessionDuration |
-| ก้าวต่อนาที | tvStepsPerMin |
-| เขย่าต่อนาที | tvShakesPerMin |
-| เป้าหมาย/ความคืบหน้า | btnGoal, goalProgress, tvGoalRemaining, tvGoalPercent |
-| ยอดสะสมจากประวัติ | tvCumulativeSummary, tvHistoryTotals |
-| รายการประวัติทั้งหมด | rvActivityHistory |
-| กิจกรรมล่าสุด | rvRecentHistory |
-| ปุ่มหลัก/จบกิจกรรม | btnPrimary, btnEnd |
-| กราฟ | activityChart |
-| ป้ายสถิติในรายการ | badgeStep, badgeShake |
-| หน้าสรุป | tvSummarySteps, tvSummaryDuration, tvSummaryShakes, tvSummaryRate, tvSummaryShakeRate |
+| ก้าวเดิน / การเขย่า | `tvCurrentSteps`, `tvCurrentShakes` |
+| ระยะเวลา | `tvSessionDuration` |
+| อัตราต่อนาที | `tvStepsPerMin`, `tvShakesPerMin` |
+| เป้าหมายและความคืบหน้า | `btnGoal`, `goalProgress`, `tvGoalRemaining`, `tvGoalPercent` |
+| ยอดสะสม | `tvCumulativeSummary`, `tvHistoryTotals` |
+| ประวัติทั้งหมด / ล่าสุด | `rvActivityHistory`, `rvRecentHistory` |
+| ปุ่มควบคุม | `btnPrimary`, `btnEnd` |
+| กราฟ | `activityChart` |
+| ป้ายสถิติ | `badgeStep`, `badgeShake` |
+| หน้าสรุป | `tvSummarySteps`, `tvSummaryDuration`, `tvSummaryShakes`, `tvSummaryRate`, `tvSummaryShakeRate` |
 
-`ActivityRecord.id` ต้องเป็น ID ถาวรจากฐานข้อมูล ไม่ใช้ตำแหน่งในรายการเป็น ID รายการเรียงใหม่ไปเก่า
-
-## กติกาที่ใช้ใน UI ตัวอย่าง
+## กติกาการแสดงผล
 
 - อัตราต่อนาที = จำนวน × 60 / เวลากิจกรรม; เวลาศูนย์แสดง 0.0
-- ยอดสะสมรวมเฉพาะรายการที่บันทึกแล้ว ไม่รวมเซสชันที่กำลังทำ
-- ป้ายสถิติ: ค่ามากกว่า 0 และมากกว่าค่าสูงสุดของรายการที่เก่ากว่าอย่างเคร่งครัด ค่าเสมอไม่เป็นสถิติใหม่
-- ลบ/คืนรายการแล้วคำนวณยอดและป้ายทั้งหมดใหม่
-- เลิกทำมีเวลา 8 วินาที ควรเก็บข้อมูลที่จำเป็นสำหรับคืนรายการให้ครบ
-- เป้าหมาย 1–100,000 ก้าว
-- ขอสิทธิ์/ไม่อนุญาต/ไม่มีเซนเซอร์เป็นแค่ state preview ต้องแทนด้วยผลตรวจจริงก่อนส่งงาน
+- ยอดสะสมรวมเฉพาะรายการที่บันทึกแล้ว
+- ประวัติเรียงใหม่ไปเก่า และใช้ ID ถาวรของรายการ
+- ป้ายสถิติใหม่แสดงเมื่อค่ามากกว่า 0 และมากกว่าค่าสูงสุดของรายการที่เก่ากว่าอย่างเคร่งครัด
+- ลบหรือคืนรายการแล้วคำนวณยอดสะสมและป้ายใหม่
+- เลิกทำการลบได้ภายใน 8 วินาที
+- เป้าหมายกำหนดได้ 1–100,000 ก้าว
+- การพักหยุดทั้งเวลาและตัวนับในเวอร์ชัน UI prototype
 
-## ประเด็นเวลาที่ต้องตรวจ checklist
+## ทรัพยากรดีไซน์
 
-สไลด์และคลาสยกตัวอย่างจับเวลาตั้งแต่เปิดแอป ชุด UI จึงเปิดด้วยข้อมูลตัวอย่างพร้อมสถานะ RECORDING และมีตัวเลือกเริ่มเอง การพักหยุดเวลาตาม UX ที่เลือกไว้ แต่ยังต้องตรวจ Excel ว่าต้องใช้เวลาตั้งแต่เปิดแอปแบบไม่หักช่วงพักหรือไม่
-
-## ไฟล์ดีไซน์
-
-- `res/values/colors.xml` และ `styles.xml`: สีและ typography
-- `res/layout/screen_*.xml`: แต่ละหน้าจอ
+- `res/values/colors.xml`, `styles.xml`: สีและตัวอักษร
+- `res/layout/screen_*.xml`: หน้าจอหลัก
 - `res/layout/item_activity.xml`: การ์ดประวัติ
 - `res/layout/sheet_*.xml`: bottom sheets
-- `res/drawable/`: รูปทรง ไอคอน และ states ของปุ่ม
-- `design-reference/`: HTML mockup และภาพสำหรับเทียบดีไซน์
+- `res/drawable/`: ไอคอน รูปทรง และสถานะปุ่ม
+- `design-reference/`: ภาพหน้าจอและ HTML อ้างอิงการออกแบบ
 
-ไลบรารี RecyclerView: https://developer.android.com/jetpack/androidx/releases/recyclerview
+## กระบวนการพัฒนา
+
+ใช้ `main` สำหรับเวอร์ชันที่พร้อมตรวจสอบ และสร้าง feature branch ตามงาน เช่น `feature/sensors` หรือ `feature/sqlite` ตรวจการ build และทดสอบส่วนที่เปลี่ยนก่อนเปิด Pull Request ส่วน `ui-v1.0` ใช้อ้างอิงหน้าตาและพฤติกรรมของ UI รุ่นแรก
