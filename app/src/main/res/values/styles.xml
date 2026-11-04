@@ -1,15 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.StepByStep" parent="android:style/Theme.Material.NoActionBar">
-        <item name="android:fontFamily">sans</item>
-        <item name="android:colorAccent">@color/lime</item>
-        <item name="android:windowLightStatusBar">false</item>
-        <item name="android:statusBarColor">@color/bg</item>
-        <item name="android:navigationBarColor">@color/bg</item>
-        <item name="android:windowBackground">@color/bg</item>
-        <item name="android:windowActionModeOverlay">true</item>
-        <item name="android:windowSoftInputMode">adjustResize</item>
-        <item name="android:colorControlHighlight">#20DCF88B</item>
-    </style>
     <style name="Text">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

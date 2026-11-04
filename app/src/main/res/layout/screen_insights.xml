@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone" tools:visibility="visible" android:paddingHorizontal="20dp" android:paddingBottom="24dp" android:id="@+id/pageInsights">
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginTop="11dp" android:layout_marginBottom="22dp">
         <TextView style="@style/Text" android:id="@+id/insightKicker" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/insightKicker" android:textSize="10sp" android:textColor="#A6BB92" android:letterSpacing="0.12" />

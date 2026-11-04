@@ -4,12 +4,6 @@
 
 เวอร์ชันปัจจุบันเป็น **UI prototype ที่รันและทดลองใช้งานได้** โดยใช้ข้อมูลตัวอย่างในหน่วยความจำ เพื่อแสดงหน้าจอ ลำดับการทำกิจกรรม และการจัดการประวัติ
 
-## ภาพตัวอย่าง
-
-| กิจกรรมปัจจุบัน | สรุปกิจกรรม | ประวัติกิจกรรม |
-|---|---|---|
-| <img src="design-reference/native-paused.jpg" alt="หน้ากิจกรรมและปุ่มทำต่อหรือจบ" width="240"> | <img src="design-reference/native-summary.jpg" alt="หน้าสรุปก่อนบันทึก" width="240"> | <img src="design-reference/native-history.jpg" alt="รายการประวัติและยอดสะสม" width="240"> |
-
 ## ประสบการณ์การใช้งาน
 
 - แสดงก้าวเดิน จำนวนครั้งที่เขย่า ระยะเวลา และอัตราต่อนาที
@@ -64,25 +58,36 @@ git clone https://github.com/dannypsx/StepByStep.git
 
 ## โครงสร้างโปรเจกต์
 
+โปรเจกต์ Android แบบ Empty Views Activity ใช้ Java และ XML เปิดโฟลเดอร์รากด้วย Android Studio ได้โดยตรง
+
 ```text
-app/src/main/
-├── java/com/stepbystep/ui/
-│   ├── MainActivity.java          # การแสดงหน้าจอและการนำทาง
-│   ├── ActivityUiActions.java     # การกระทำจากผู้ใช้
-│   ├── model/                    # ข้อมูลที่ใช้แสดงผล
-│   ├── presentation/             # Adapter และการจัดรูปแบบข้อมูล
-│   ├── views/                    # กราฟ Native
-│   └── demo/                     # ตัวควบคุมข้อมูลตัวอย่าง
-└── res/
-    ├── layout/                   # หน้าจอ รายการ และ bottom sheets
-    ├── drawable/                 # ไอคอนและรูปแบบปุ่ม
-    └── values/                   # สี ธีม และข้อความ
+StepByStep/
+├── app/
+│   ├── build.gradle
+│   ├── proguard-rules.pro
+│   └── src/main/
+│       ├── AndroidManifest.xml
+│       ├── java/com/stepbystep/ui/
+│       │   ├── MainActivity.java
+│       │   ├── ActivityUiActions.java
+│       │   ├── model/
+│       │   ├── presentation/
+│       │   ├── views/
+│       │   └── demo/
+│       └── res/
+│           ├── layout/          # หน้าจอและส่วนประกอบ XML
+│           ├── drawable/        # รูปแบบปุ่ม พื้นหลัง และไอคอน
+│           ├── mipmap-anydpi/   # ไอคอนแอป
+│           ├── color/           # สีตามสถานะ
+│           └── values/          # strings.xml, colors.xml, themes.xml, styles.xml
+├── gradle/wrapper/
+├── build.gradle
+├── settings.gradle
+├── gradle.properties
+├── gradlew
+└── gradlew.bat
 ```
 
-รายละเอียดการต่อยอดระบบอยู่ใน [โครงสร้างและแนวทางพัฒนา](INTEGRATION.md) และผลตรวจเวอร์ชันปัจจุบันอยู่ใน [บันทึกการทดสอบ](VALIDATION.md)
+`MainActivity` แสดงผลจาก `ActivityUiState` และรับการกดผ่าน `ActivityUiActions` ส่วน `demo/UiPreviewController` จัดการข้อมูลจำลองสำหรับทดลอง UI สามารถต่อยอดด้วยเซนเซอร์และฐานข้อมูลโดยใช้โครงสร้างหน้าจอเดิม
 
-## เวอร์ชันและการร่วมพัฒนา
-
-- `main` เก็บเวอร์ชันที่พร้อมให้ตรวจและทดลองใช้งาน
-- `ui-v1.0` เป็นเวอร์ชันอ้างอิงของส่วนติดต่อผู้ใช้
-- งานพัฒนาต่อแยกเป็น feature branch เช่น `feature/sensors` และ `feature/sqlite` แล้วเปิด Pull Request กลับเข้า `main`
+ไฟล์ `local.properties` และโฟลเดอร์ `.idea`, `.gradle`, `app/build` สร้างขึ้นในเครื่องเมื่อเปิดหรือ build โปรเจกต์ และไม่เก็บใน Git
