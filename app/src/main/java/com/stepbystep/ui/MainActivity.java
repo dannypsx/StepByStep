@@ -27,6 +27,7 @@ import com.stepbystep.ui.model.ActivityRecord;
 import com.stepbystep.ui.model.ActivityUiState;
 import com.stepbystep.ui.presentation.ActivityHistoryAdapter;
 import com.stepbystep.ui.presentation.UiFormat;
+import com.stepbystep.ui.sensor.ShakeDetector;
 import com.stepbystep.ui.views.ActivityChartView;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -45,6 +46,7 @@ public final class MainActivity extends Activity {
     private boolean bindingSettings;
     private ActivityUiState.Phase renderedPhase;
     private Dialog currentSheet;
+    private ShakeDetector shakeDetector;
 
     @Override protected void onCreate(Bundle saved) {
         super.onCreate(saved);
@@ -65,6 +67,9 @@ public final class MainActivity extends Activity {
         setupList(R.id.rvRecentHistory, recentAdapter);
         preview = new UiPreviewController(restored, getPreferences(MODE_PRIVATE).getBoolean("ui_auto_start", true), this::renderState);
         actions = preview;
+        // Real shake counting: the preview controller only counts while the phase is RECORDING.
+        shakeDetector = new ShakeDetector(this, preview::addDemoShake);
+        if (!shakeDetector.isAvailable()) message("เครื่องนี้ไม่มีเซนเซอร์ Accelerometer จึงนับการเขย่าไม่ได้");
         click(R.id.navToday, () -> go(0));
         click(R.id.navHistory, () -> go(1));
         click(R.id.navInsights, () -> go(2));
@@ -335,8 +340,16 @@ public final class MainActivity extends Activity {
         v.findViewById(R.id.btnSensorAllow).setOnClickListener(button -> showSensor("allowed"));
         v.findViewById(R.id.btnSensorClose).setOnClickListener(button -> closeSheet());
     }
-    @Override protected void onResume() { super.onResume(); if (preview != null) preview.attach(); }
-    @Override protected void onPause() { if (preview != null) preview.detach(); super.onPause(); }
+    @Override protected void onResume() {
+        super.onResume();
+        if (preview != null) preview.attach();
+        if (shakeDetector != null) shakeDetector.start();
+    }
+    @Override protected void onPause() {
+        if (shakeDetector != null) shakeDetector.stop();
+        if (preview != null) preview.detach();
+        super.onPause();
+    }
     @Override protected void onDestroy() { closeSheet(); super.onDestroy(); }
     @Override protected void onSaveInstanceState(Bundle out) { out.putInt("ui_page", page); out.putSerializable("ui_preview", preview.snapshot()); super.onSaveInstanceState(out); }
     @Override public void onBackPressed() {
