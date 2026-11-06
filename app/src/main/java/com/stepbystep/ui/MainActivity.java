@@ -65,7 +65,7 @@ public final class MainActivity extends Activity {
         recentAdapter = new ActivityHistoryAdapter(1, this::showDetail);
         setupList(R.id.rvActivityHistory, historyAdapter);
         setupList(R.id.rvRecentHistory, recentAdapter);
-        preview = new UiPreviewController(restored, getPreferences(MODE_PRIVATE).getBoolean("ui_auto_start", true), this::renderState);
+        preview = new UiPreviewController(this, restored, getPreferences(MODE_PRIVATE).getBoolean("ui_auto_start", true), this::renderState);
         actions = preview;
         // Real shake counting: the preview controller only counts while the phase is RECORDING.
         shakeDetector = new ShakeDetector(this, preview::addDemoShake);

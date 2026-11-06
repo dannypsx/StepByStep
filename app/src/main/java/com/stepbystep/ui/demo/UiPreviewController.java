@@ -1,26 +1,26 @@
 package com.stepbystep.ui.demo;
 
+import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
 import com.stepbystep.ui.ActivityUiActions;
+import com.stepbystep.ui.db.ActivityDatabaseHelper;
 import com.stepbystep.ui.model.ActivityRecord;
 import com.stepbystep.ui.model.ActivityUiState;
 import static com.stepbystep.ui.model.ActivityUiState.Phase.*;
-import java.util.Calendar;
 
 /**
- * UI DEMO ONLY: in-memory fixture data and simulated counts.
- * No SensorManager, runtime permissions, SQLite, networking or background tracking.
- * TODO(integration): implement ActivityUiActions and push ActivityUiState to the UI.
+ * Controller managing activity recording, shake counting, and SQLite database persistence.
+ * Note: Steps are bypassed with 0 on save until the step-counting feature is mapped.
  */
 public final class UiPreviewController implements ActivityUiActions {
     public interface Listener { void onStateChanged(ActivityUiState state); }
     private final ActivityUiState state;
     private final Listener listener;
+    private final ActivityDatabaseHelper dbHelper;
     private final Handler handler = new Handler(Looper.getMainLooper());
     private long lastTick = SystemClock.elapsedRealtime();
-    private long nextId;
     private final Runnable ticker = new Runnable() {
         @Override public void run() {
             tick();
@@ -32,25 +32,20 @@ public final class UiPreviewController implements ActivityUiActions {
         }
     };
 
-    public UiPreviewController(ActivityUiState restored, boolean autoStart, Listener listener) {
+    public UiPreviewController(Context context, ActivityUiState restored, boolean autoStart, Listener listener) {
         this.listener = listener;
-        this.state = restored == null ? fixtures(autoStart) : restored;
-        nextId = 1;
-        for (ActivityRecord record : state.history) nextId = Math.max(nextId, record.id + 1);
+        this.dbHelper = ActivityDatabaseHelper.getInstance(context);
+        this.state = restored == null ? initFromDb(autoStart) : restored;
     }
 
-    private static ActivityUiState fixtures(boolean autoStart) {
+    private ActivityUiState initFromDb(boolean autoStart) {
         ActivityUiState s = new ActivityUiState();
         s.autoStart = autoStart;
-        if (!autoStart) { s.phase = IDLE; s.steps = s.shakes = 0; s.seconds = 0; }
-        Calendar date = Calendar.getInstance();
-        date.set(2026, Calendar.OCTOBER, 29, 18, 57, 40);
-        date.set(Calendar.MILLISECOND, 0);
-        long time = date.getTimeInMillis();
-        s.history.add(new ActivityRecord(4, time, 12, 7, 13));
-        s.history.add(new ActivityRecord(3, time - 40000, 0, 6, 16));
-        s.history.add(new ActivityRecord(2, time - 100000, 0, 10, 29));
-        s.history.add(new ActivityRecord(1, time - 4600000, 1, 0, 8));
+        s.phase = autoStart ? RECORDING : IDLE;
+        s.steps = 0;
+        s.shakes = 0;
+        s.seconds = 0;
+        s.history.addAll(dbHelper.getAllRecords());
         return s;
     }
 
@@ -70,7 +65,13 @@ public final class UiPreviewController implements ActivityUiActions {
     @Override public void finish() { if (state.phase == PAUSED) change(REVIEW); }
     @Override public void save() {
         if (state.phase != REVIEW) return;
-        ActivityRecord record = new ActivityRecord(nextId++, System.currentTimeMillis(), state.steps, state.shakes, state.seconds);
+        // TODO(step-integration): replace 0 with state.steps when step sensor is mapped.
+        int stepsToSave = 0;
+        long createdAt = System.currentTimeMillis();
+        long newId = dbHelper.insertRecord(createdAt, stepsToSave, state.shakes, state.seconds);
+        if (newId == -1) return;
+        state.steps = stepsToSave;
+        ActivityRecord record = new ActivityRecord(newId, createdAt, stepsToSave, state.shakes, state.seconds);
         state.history.add(0, record);
         state.savedRecordId = record.id;
         state.historyVersion++;
@@ -92,6 +93,7 @@ public final class UiPreviewController implements ActivityUiActions {
             state.deletedIndex = index;
             state.undoExpiresAt = SystemClock.elapsedRealtime() + 8000;
             state.historyVersion++;
+            dbHelper.deleteRecord(id);
             if (state.savedRecordId == id && state.phase == SAVED) newSession();
             else emit();
             return;
@@ -99,6 +101,7 @@ public final class UiPreviewController implements ActivityUiActions {
     }
     @Override public void undoDelete() {
         if (state.deletedRecord == null || SystemClock.elapsedRealtime() >= state.undoExpiresAt) return;
+        dbHelper.insertWithId(state.deletedRecord);
         state.history.add(Math.min(state.deletedIndex, state.history.size()), state.deletedRecord);
         state.deletedRecord = null;
         state.historyVersion++;

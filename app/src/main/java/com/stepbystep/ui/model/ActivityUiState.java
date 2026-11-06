@@ -8,8 +8,8 @@ public final class ActivityUiState implements Serializable {
     private static final long serialVersionUID = 1L;
     public enum Phase { IDLE, RECORDING, PAUSED, REVIEW, SAVED }
     public Phase phase = Phase.RECORDING;
-    public int steps = 9, shakes = 8, goal = 100;
-    public double seconds = 49;
+    public int steps = 0, shakes = 0, goal = 100;
+    public double seconds = 0;
     public boolean autoStart = true;
     public ArrayList<ActivityRecord> history = new ArrayList<>();
     public long historyVersion = 0, savedRecordId = -1;
