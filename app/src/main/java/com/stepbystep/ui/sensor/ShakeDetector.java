@@ -9,14 +9,15 @@ import android.os.SystemClock;
 
 /**
  * Counts phone shakes from the accelerometer. No runtime permission is required for this sensor.
- * A shake is a reading whose total acceleration exceeds THRESHOLD_G, with at least MIN_GAP_MS
+ * At rest the accelerometer reads only gravity (about 9.81 m/s^2), so a shake is a reading whose
+ * total acceleration differs from gravity by more than THRESHOLD, with at least MIN_GAP_MS
  * between two counted shakes so one physical shake is not counted several times.
  */
 public final class ShakeDetector implements SensorEventListener {
     public interface Listener { void onShake(); }
 
-    private static final float THRESHOLD_G = 2.5f;
-    private static final long MIN_GAP_MS = 400;
+    private static final float THRESHOLD = 3.2f; // m/s^2 away from gravity
+    private static final long MIN_GAP_MS = 700;
 
     private final SensorManager manager;
     private final Sensor accelerometer;
@@ -45,11 +46,9 @@ public final class ShakeDetector implements SensorEventListener {
     }
 
     @Override public void onSensorChanged(SensorEvent event) {
-        float gx = event.values[0] / SensorManager.GRAVITY_EARTH;
-        float gy = event.values[1] / SensorManager.GRAVITY_EARTH;
-        float gz = event.values[2] / SensorManager.GRAVITY_EARTH;
-        double gForce = Math.sqrt(gx * gx + gy * gy + gz * gz);
-        if (gForce < THRESHOLD_G) return;
+        float x = event.values[0], y = event.values[1], z = event.values[2];
+        double magnitude = Math.sqrt(x * x + y * y + z * z);
+        if (Math.abs(magnitude - SensorManager.GRAVITY_EARTH) < THRESHOLD) return;
         long now = SystemClock.elapsedRealtime();
         if (now - lastShakeAt < MIN_GAP_MS) return;
         lastShakeAt = now;
