@@ -11,8 +11,8 @@ import com.stepbystep.ui.model.ActivityUiState;
 import static com.stepbystep.ui.model.ActivityUiState.Phase.*;
 
 /**
- * Controller managing activity recording, shake counting, and SQLite database persistence.
- * Note: Steps are bypassed with 0 on save until the step-counting feature is mapped.
+ * Controller managing activity recording, step and shake counting, and SQLite database persistence.
+ * Steps and shakes are only added while the phase is RECORDING, and both reset for a new session.
  */
 public final class UiPreviewController implements ActivityUiActions {
     public interface Listener { void onStateChanged(ActivityUiState state); }
@@ -65,13 +65,10 @@ public final class UiPreviewController implements ActivityUiActions {
     @Override public void finish() { if (state.phase == PAUSED) change(REVIEW); }
     @Override public void save() {
         if (state.phase != REVIEW) return;
-        // TODO(step-integration): replace 0 with state.steps when step sensor is mapped.
-        int stepsToSave = 0;
         long createdAt = System.currentTimeMillis();
-        long newId = dbHelper.insertRecord(createdAt, stepsToSave, state.shakes, state.seconds);
+        long newId = dbHelper.insertRecord(createdAt, state.steps, state.shakes, state.seconds);
         if (newId == -1) return;
-        state.steps = stepsToSave;
-        ActivityRecord record = new ActivityRecord(newId, createdAt, stepsToSave, state.shakes, state.seconds);
+        ActivityRecord record = new ActivityRecord(newId, createdAt, state.steps, state.shakes, state.seconds);
         state.history.add(0, record);
         state.savedRecordId = record.id;
         state.historyVersion++;

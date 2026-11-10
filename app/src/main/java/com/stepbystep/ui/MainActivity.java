@@ -28,6 +28,7 @@ import com.stepbystep.ui.model.ActivityUiState;
 import com.stepbystep.ui.presentation.ActivityHistoryAdapter;
 import com.stepbystep.ui.presentation.UiFormat;
 import com.stepbystep.ui.sensor.ShakeDetector;
+import com.stepbystep.ui.sensor.StepCounter;
 import com.stepbystep.ui.views.ActivityChartView;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -47,6 +48,8 @@ public final class MainActivity extends Activity {
     private ActivityUiState.Phase renderedPhase;
     private Dialog currentSheet;
     private ShakeDetector shakeDetector;
+    private StepCounter stepCounter;
+    private static final int REQUEST_ACTIVITY_RECOGNITION = 1;
 
     @Override protected void onCreate(Bundle saved) {
         super.onCreate(saved);
@@ -54,6 +57,8 @@ public final class MainActivity extends Activity {
         getWindow().setNavigationBarColor(getColor(R.color.bg));
         getWindow().getDecorView().setSystemUiVisibility(0);
         setContentView(R.layout.activity_main);
+        // Recording pauses when the app leaves the foreground, so keep the screen on while it is open.
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         installInsets();
         ActivityUiState restored = null;
         if (saved != null) {
@@ -70,6 +75,11 @@ public final class MainActivity extends Activity {
         // Real shake counting: the preview controller only counts while the phase is RECORDING.
         shakeDetector = new ShakeDetector(this, preview::addDemoShake);
         if (!shakeDetector.isAvailable()) message("เครื่องนี้ไม่มีเซนเซอร์ Accelerometer จึงนับการเขย่าไม่ได้");
+        // Real step counting (Sensor.TYPE_STEP_COUNTER): the sensor reports only new steps, and the
+        // controller adds them only while the phase is RECORDING, so each session starts from 0.
+        stepCounter = new StepCounter(this, preview::addDemoSteps);
+        if (!stepCounter.isAvailable()) message("เครื่องนี้ไม่มีเซนเซอร์นับก้าว จึงนับก้าวเดินไม่ได้");
+        else if (!canReadSteps()) requestPermissions(new String[]{android.Manifest.permission.ACTIVITY_RECOGNITION}, REQUEST_ACTIVITY_RECOGNITION);
         click(R.id.navToday, () -> go(0));
         click(R.id.navHistory, () -> go(1));
         click(R.id.navInsights, () -> go(2));
@@ -344,8 +354,21 @@ public final class MainActivity extends Activity {
         super.onResume();
         if (preview != null) preview.attach();
         if (shakeDetector != null) shakeDetector.start();
+        if (stepCounter != null && canReadSteps()) stepCounter.start();
+    }
+    /** Android 10+ (API 29) guards the step counter behind the ACTIVITY_RECOGNITION runtime permission. */
+    private boolean canReadSteps() {
+        return Build.VERSION.SDK_INT < 29
+                || checkSelfPermission(android.Manifest.permission.ACTIVITY_RECOGNITION) == android.content.pm.PackageManager.PERMISSION_GRANTED;
+    }
+    @Override public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] results) {
+        super.onRequestPermissionsResult(requestCode, permissions, results);
+        if (requestCode != REQUEST_ACTIVITY_RECOGNITION) return;
+        if (canReadSteps()) stepCounter.start();
+        else message("ยังไม่ได้อนุญาตสิทธิ์กิจกรรมทางกาย จึงนับก้าวเดินไม่ได้");
     }
     @Override protected void onPause() {
+        if (stepCounter != null) stepCounter.stop();
         if (shakeDetector != null) shakeDetector.stop();
         if (preview != null) preview.detach();
         super.onPause();
